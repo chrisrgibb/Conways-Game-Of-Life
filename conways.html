@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+    <head>
+    	<title>Conway's Game Of Life</title>
+    </head>
+ 	<body>
+ 		<div id="counter"></div>
+ 		<div id="main"></div>
+ 	</body>
+ 	<script>
+
+ 	function Cell(x, y, alive){
+ 		this.x = x;
+ 		this.y = y;
+ 		this.isAlive = alive;
+ 	}
+
+ 	function getNeighbourCount(cell){
+		var x = cell.x;
+		var y = cell.y;
+		var count = 0;
+
+		// top row
+		count += cells[(y-1 +gridSize) % gridSize][(x-1 +gridSize) % gridSize].isAlive & 1;
+		count += cells[(y-1 +gridSize) % gridSize][(x +gridSize) % gridSize].isAlive & 1;
+		count += cells[(y-1 +gridSize) % gridSize][(x+1 +gridSize) % gridSize].isAlive & 1;
+
+		// middle row
+		count += cells[(y + gridSize) % gridSize][(x-1 + gridSize) % gridSize].isAlive & 1;
+		count += cells[(y + gridSize) % gridSize][(x+1 + gridSize) % gridSize].isAlive & 1;
+		
+		// bottom row
+		count += cells[(y + 1 + gridSize) % gridSize][(x-1 + gridSize) % gridSize].isAlive & 1;
+		count += cells[(y + 1 + gridSize) % gridSize][(x + gridSize) % gridSize].isAlive & 1;
+		count += cells[(y + 1 + gridSize) % gridSize][(x + 1 + gridSize) % gridSize].isAlive & 1;
+
+		return count;
+ 	}
+
+ 	function isAlive(cell){
+ 		var neighbours = getNeighbourCount(cell);
+ 		var rule1 = !(neighbours - 2) || !(neighbours - 3);
+ 		var rule2 = (!(neighbours - 4) && !cell.isAlive);
+ 		return rule1 || rule2;
+ 	}
+
+ 	function createCells(size){
+ 		var cells = [];
+ 		for(var y = 0; y < size; y++){
+ 			var xArray = [];
+ 			for(var x = 0; x < size; x++){
+ 				xArray.push(new Cell(x, y, false));
+ 			}
+ 			cells.push(xArray);
+ 		}
+ 		return cells;
+ 	}
+
+ 	function mainLoop(numOfLoops){
+ 		for(var loop = 0; loop < numOfLoops; loop++){
+ 			printGrid(loop);
+ 			oneLoop();
+	 	}
+ 	}
+
+ 	function oneLoop(){
+		var nextCells = [];
+		for(var y = 0; y < gridSize; y++){
+			var xLine = [];
+			for(var x = 0; x < gridSize; x++){
+				var newCell = new Cell(x, y, isAlive(cells[y][x]) );
+				xLine.push(newCell);
+			}
+			nextCells.push(xLine);
+		}
+		cells = nextCells;
+ 	}
+
+ 	function printGrid(count){
+ 		var text = "";
+		for(var y = 0; y < gridSize; y++){
+			var line = "";
+ 			for(var x = 0; x < gridSize; x++){
+ 				line += (cells[y][x].isAlive & 1) + " ";
+ 			}
+ 			line += '<br>';
+ 			text += line;
+ 		}
+ 		countDiv.innerHTML = "iterations : " +  count;
+ 		mainarea.innerHTML = text;
+ 	}
+
+
+ 	// set up variables
+ 	var cells = [];
+ 	var gridSize = 20;
+ 	var mainarea = document.getElementById("main");
+ 	var countDiv = document.getElementById("counter");
+
+ 	cells = createCells(gridSize);
+ 	cells[0][0].isAlive = 1;
+ 	cells[0][1].isAlive = 1;
+
+ 	var counter = 0;
+ 	setInterval(function(){
+ 		counter++;
+ 		printGrid(counter);
+		oneLoop();
+ 	}, 1000);
+
+ 	// mainLoop(10);
+
+ 	</script>
+ 	</html>
