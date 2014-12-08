@@ -38,9 +38,9 @@
  	}
 
  	function isAlive(cell){
- 		var neighbours = getNeighbourCount(cell);
- 		var rule1 = !(neighbours - 2) || !(neighbours - 3);
- 		var rule2 = (!(neighbours - 4) && !cell.isAlive);
+		var neighbours = getNeighbourCount(cell);
+ 		var rule1 = neighbours == 2 || neighbours ==3;
+ 		var rule2 = neighbours==3 && !cell.isAlive;
  		return rule1 || rule2;
  	}
 
@@ -98,8 +98,8 @@
  	var countDiv = document.getElementById("counter");
 
  	cells = createCells(gridSize);
- 	cells[0][0].isAlive = 1;
- 	cells[0][1].isAlive = 1;
+ 	cells[10][10].isAlive = 1;
+ 	cells[11][10].isAlive = 1;
 
  	var counter = 0;
  	setInterval(function(){
