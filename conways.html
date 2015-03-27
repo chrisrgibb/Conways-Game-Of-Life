@@ -39,8 +39,8 @@
 
  	function isAlive(cell){
 		var neighbours = getNeighbourCount(cell);
- 		var rule1 = neighbours == 2 || neighbours ==3;
- 		var rule2 = neighbours==3 && !cell.isAlive;
+ 		var rule1 = neighbours == 2 || neighbours == 3;
+ 		var rule2 = neighbours == 3 && !cell.isAlive;
  		return rule1 || rule2;
  	}
 
