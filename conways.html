@@ -4,6 +4,7 @@
     	<title>Conway's Game Of Life</title>
     </head>
  	<body>
+ 		<h2>Conway's game of life with no if, else or ternary statements </h2>
  		<div id="counter"></div>
  		<div id="main"></div>
  	</body>
@@ -77,11 +78,13 @@
  	}
 
  	function printGrid(count){
+ 		var blocks = ["&#9723;", "&#9724;"];
+
  		var text = "";
 		for(var y = 0; y < gridSize; y++){
 			var line = "";
  			for(var x = 0; x < gridSize; x++){
- 				line += (cells[y][x].isAlive & 1) + " ";
+ 				line += blocks[(cells[y][x].isAlive & 1)]  + " ";
  			}
  			line += '<br>';
  			text += line;
@@ -96,7 +99,7 @@
  	var gridSize = 20;
  	var mainarea = document.getElementById("main");
  	var countDiv = document.getElementById("counter");
- 	var cellsToStartIn = Math.round(Math.random() * gridSize) -1;
+ 	var cellsToStartIn = Math.floor(Math.random() * gridSize) -1;
  	cells = createCells(gridSize);
 
 
