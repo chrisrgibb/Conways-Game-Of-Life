@@ -96,10 +96,12 @@
  	var gridSize = 20;
  	var mainarea = document.getElementById("main");
  	var countDiv = document.getElementById("counter");
-
+ 	var cellsToStartIn = Math.round(Math.random() * gridSize) -1;
  	cells = createCells(gridSize);
- 	cells[10][10].isAlive = 1;
- 	cells[11][10].isAlive = 1;
+
+
+ 	cells[10][cellsToStartIn].isAlive = 1;
+ 	cells[11][cellsToStartIn].isAlive = 1;
 
  	var counter = 0;
  	setInterval(function(){
